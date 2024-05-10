@@ -5,3 +5,4 @@ openai
 pydub
 pip install pyaudio
 loadenv
+pip install pdfplumber
