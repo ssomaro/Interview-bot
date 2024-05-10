@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from tempfile import NamedTemporaryFile
 import pdfplumber
 from openai import OpenAI
+import json
 client = OpenAI()
 
 # Load environment variables
@@ -75,3 +76,50 @@ def extract_text_from_pdf(pdf_file):
         for page in pdf.pages:
             text += page.extract_text()
     return text
+
+
+def generate_interview_questions(resume_text, job_desc):
+    """Generate five interview questions using GPT-4."""
+    prompt = f"""
+    I am sharing a resume and a job description with you.
+    Your task is to generate five interview questions that would be suitable to ask the candidate.
+
+    Resume: {resume_text}
+    Job Description: {job_desc}
+
+    Respond in JSON format only, with an array of five questions like this do not include annything else even the word json,just the dictionary, i should be able to convert it to json :
+
+    {{
+        "questions": [
+            "Question 1",
+            "Question 2",
+            "Question 3",
+            "Question 4",
+            "Question 5"
+        ]
+    }}
+    """
+    completion = openai.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": prompt},
+    ])
+    try:
+        response_text = completion.choices[0].message.content.strip()
+        return json.loads(response_text)
+    except json.JSONDecodeError as e:
+        st.write("Error parsing the response. Please try again.")
+        st.write(f"Raw response: {response_text}")
+        st.write(f"JSONDecodeError: {e}")
+        return {"questions": []}
+    # return json.loads(completion.choices[0].message.content.strip())
+
+def save_responses_to_file(responses):
+    """Save the responses to a text file."""
+    file_path = "interview_responses.txt"
+    with open(file_path, "w") as f:
+        for response in responses:
+            f.write(f"Question: {response['question']}\n")
+            f.write(f"Answer: {response['answer']}\n\n")
+    st.write(f"Responses saved to {file_path}")

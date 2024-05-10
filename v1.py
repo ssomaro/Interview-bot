@@ -32,11 +32,17 @@ job_description = st.text_area("Paste the Job Description here")
 
 if st.button("Submit"):
     if resume_file and job_description:
+        st.write("Loading...")
         resume_content = extract_text_from_pdf(resume_file)
         st.session_state['resume'] = resume_content
         st.session_state['job_description'] = job_description
+        questions = generate_interview_questions(resume_content, job_description)
+        st.session_state['questions'] = questions
         st.session_state['is_data_uploaded'] = True
         st.write("Resume and Job Description successfully uploaded.")
+        print(questions)
+        
+    
     else:
         st.write("Please provide both Resume and Job Description.")
 

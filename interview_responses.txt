@@ -1,0 +1,3 @@
+Question: Can you explain a complex SQL query you have written in the past and the purpose it served?
+Answer: hi I have done SQL multipass and future and it's amazing
+
