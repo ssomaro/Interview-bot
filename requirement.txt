@@ -1,0 +1,7 @@
+streamlit 
+SpeechRecognition 
+gtts 
+openai 
+pydub
+pip install pyaudio
+loadenv
