@@ -23,7 +23,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 import openai
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from tempfile import NamedTemporaryFile
 import pdfplumber
 from openai import OpenAI
