@@ -5,3 +5,4 @@ openai
 pydub
 loadenv
 pdfplumber
+pyaudio
