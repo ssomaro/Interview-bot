@@ -33,9 +33,10 @@ import io
 from pydub import AudioSegment
 from pydub.playback import play
 # Load environment variables
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-openai.api_key = OPENAI_API_KEY
+# load_dotenv()
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# openai.api_key = OPENAI_API_KEY
+openai.api_key = st.secrets.OPENAI_API_KEY
 recognizer = sr.Recognizer()
 
 def get_text_from_voice():
