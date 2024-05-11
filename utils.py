@@ -22,10 +22,10 @@ def get_text_from_voice():
     """Capture voice and convert to text"""
     with sr.Microphone() as source:
         st.write("Please speak into the microphone. give a pause of 3 seconds after speaking.")
-        audio = recognizer.listen(source, timeout=30)
+        audio = recognizer.listen(source, timeout=20)
         try:
             text = recognizer.recognize_google(audio)
-            st.write(f"You said: {text}")
+            st.write(f"Response: {text}")
             return text
         except sr.UnknownValueError:
             st.write("Sorry, could not recognize your speech.")
@@ -48,13 +48,11 @@ def text_to_speech(text):
 
     # Save to file
     response.stream_to_file(speech_file_path)
-
     # Play the audio file
     audio = AudioSegment.from_mp3(speech_file_path)
     play(audio)
-
-    
-
+    #delete the file
+    os.remove(speech_file_path)
 
 
 def get_chatbot_response(prompt):
@@ -93,7 +91,8 @@ def generate_interview_questions(resume_text, job_desc):
             "Question 1",
             "Question 2",
             "Question 3",
-            
+            "Question 4",
+            "Question 5"
         ]
     }}
     """
@@ -103,13 +102,14 @@ def generate_interview_questions(resume_text, job_desc):
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": prompt},
     ])
-    response_text = completion.choices[0].message.content.strip()
-    return response_text
-    # except json.JSONDecodeError as e:
-    #     st.write("Error parsing the response. Please try again.")
-    #     st.write(f"Raw response: {response_text}")
-    #     st.write(f"JSONDecodeError: {e}")
-    #     return {"questions": []}
+    try:
+        response_text = completion.choices[0].message.content.strip()
+        return json.loads(response_text)
+    except json.JSONDecodeError as e:
+        st.write("Error parsing the response. Please try again.")
+        st.write(f"Raw response: {response_text}")
+        st.write(f"JSONDecodeError: {e}")
+        return {"questions": []}
     # return json.loads(completion.choices[0].message.content.strip())
 
 def save_responses_to_file(responses):
@@ -136,11 +136,9 @@ def generate_summary():
         {"role": "system", "content": "You are a critical evaluator."},
         {"role": "user", "content": prompt},
     ])
-    try:
-        response_text = completion.choices[0].message.content.strip()
-        return json.loads(response_text)
-    except json.JSONDecodeError as e:
-        st.write("Error parsing the response. Please try again.")
-        st.write(f"Raw response: {response_text}")
-        st.write(f"JSONDecodeError: {e}")
-        return {"questions": []}
+    response_text = completion.choices[0].message.content.strip()
+    st.write(f"Raw response: {response_text}")
+    return (response_text)
+   
+        
+       

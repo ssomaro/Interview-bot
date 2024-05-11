@@ -1,15 +1,15 @@
-Question: Can you describe a challenging SQL query you have worked on in the past and how you optimized its performance?
-Answer: hi song dream about Accenture I worked on multiple complex dashboards and I had to write multiple complex a SQL queries to understand it I use panel data complexities and other things to handle to optimize it I use things like
+Question: Can you explain a challenging data warehousing project you worked on and the solutions you implemented to overcome any obstacles?
+Answer: hi yeah I worked a lot of challenging things and I am myself a challenge I'm and I'm balloon
 
-Question: How have you utilized advanced SQL techniques like CTEs, window functions, and stored procedures in your previous projects?
-Answer: optimize the process queries and other things so I have done it just to complex and have in the percentage by 82% which is like more than twice of the percentage of time increased having said that I like to drink water so I use SQL to drink water thank you
+Question: How have you utilized your skills in cloud deployment and automation in previous roles?
+Answer: yeah so are you skills include I want jumped on one Cloud which is white in color and then I jump to another Cloud which is blue in color and then the rainfall so when I automated the rain
 
-Question: In your experience with data warehousing, how have you designed and optimized ETL pipelines for large datasets?
-Answer: complicated multi-dimensional multicolor problem solving technology by using pyspark Sequel and other things so I don't know about housing I follow Kimball technology which is essentially a Kimball database ideology for large data sets of 2 million rows thank you
+Question: Could you provide an example of a predictive analytics project you led, including the outcomes and impact on the business?
+Answer: sure I worked a lot of projects and I worked a lot of projects I was the key leader in a lot of projects I used to eat a lot of snacks
 
-Question: Could you provide an example of a complex data operation you have implemented using SQL and PySpark?
-Answer: yeah so I've used python to do complex things like complex as in we had multiple data from multiple sources so we used multiple sources from multiple data to do multiple processing I was really frustrated and I was good at it thank you
+Question: In what ways have you collaborated with business stakeholders to understand technical requirements and deliver solutions?
+Answer: I used to phone call the business requirement people and ask them what is the requirement they used to tell me the requirement and I used to enhance the requirement and use my requirement I was basically the requirement boss
 
-Question: How have you leveraged SQL in combination with other technologies, such as cloud platforms or BI tools, to achieve specific data analysis goals?
-Answer: yeah so during my time at Accenture I used to develop my reports I use secret to write queries to transform and build the GPS in the backyard but but the back end was not working then I used proper sequel to do all this calculations sequel was my hand basically
+Question: Can you walk us through a complex data visualization project you completed, highlighting the key insights derived and the tools utilized?
+Answer: sure while walking the first time took a left on the night okay alright then I went straight to 200 km then I took a bus and then this was very complicated and decided tools are used thank you
 

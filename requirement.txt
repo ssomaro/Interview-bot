@@ -3,6 +3,6 @@ SpeechRecognition
 gtts 
 openai 
 pydub
-pip install pyaudio
+pyaudio
 loadenv
-pip install pdfplumber
+pdfplumber

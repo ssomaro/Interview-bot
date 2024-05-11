@@ -45,7 +45,7 @@ if st.button("Submit"):
 
 # Section 2: Voice Chatbot
 # Section 2: Voice Chatbot
-if st.session_state.get('is_data_uploaded', False) == 2:
+if st.session_state.get('is_data_uploaded', False) ==:
     st.write("### Lets begin your interview. Click on the 'Begin' button to start.")
     
     # Get current question index and responses
