@@ -3,6 +3,5 @@ SpeechRecognition
 gtts 
 openai 
 pydub
-pyaudio
 loadenv
 pdfplumber
