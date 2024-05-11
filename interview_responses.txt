@@ -1,0 +1,3 @@
+Question: Can you elaborate on a challenging problem you encountered while designing a data mart to support data visualization and keyword generation tasks at eBay?
+Answer: yeah sure
+
