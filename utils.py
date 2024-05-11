@@ -21,8 +21,8 @@ recognizer = sr.Recognizer()
 def get_text_from_voice():
     """Capture voice and convert to text"""
     with sr.Microphone() as source:
-        st.write("Say something...")
-        audio = recognizer.listen(source, timeout=5)
+        st.write("Please speak into the microphone. give a pause of 3 seconds after speaking.")
+        audio = recognizer.listen(source, timeout=30)
         try:
             text = recognizer.recognize_google(audio)
             st.write(f"You said: {text}")
@@ -53,8 +53,7 @@ def text_to_speech(text):
     audio = AudioSegment.from_mp3(speech_file_path)
     play(audio)
 
-    # Remove the temporary file
-    os.remove(speech_file_path)
+    
 
 
 
@@ -79,7 +78,7 @@ def extract_text_from_pdf(pdf_file):
 
 
 def generate_interview_questions(resume_text, job_desc):
-    """Generate five interview questions using GPT-4."""
+    """Generate five interview questions using GPT-3.5."""
     prompt = f"""
     I am sharing a resume and a job description with you.
     Your task is to generate five interview questions that would be suitable to ask the candidate.
@@ -94,8 +93,7 @@ def generate_interview_questions(resume_text, job_desc):
             "Question 1",
             "Question 2",
             "Question 3",
-            "Question 4",
-            "Question 5"
+            
         ]
     }}
     """
@@ -105,14 +103,13 @@ def generate_interview_questions(resume_text, job_desc):
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": prompt},
     ])
-    try:
-        response_text = completion.choices[0].message.content.strip()
-        return json.loads(response_text)
-    except json.JSONDecodeError as e:
-        st.write("Error parsing the response. Please try again.")
-        st.write(f"Raw response: {response_text}")
-        st.write(f"JSONDecodeError: {e}")
-        return {"questions": []}
+    response_text = completion.choices[0].message.content.strip()
+    return response_text
+    # except json.JSONDecodeError as e:
+    #     st.write("Error parsing the response. Please try again.")
+    #     st.write(f"Raw response: {response_text}")
+    #     st.write(f"JSONDecodeError: {e}")
+    #     return {"questions": []}
     # return json.loads(completion.choices[0].message.content.strip())
 
 def save_responses_to_file(responses):
@@ -123,3 +120,27 @@ def save_responses_to_file(responses):
             f.write(f"Question: {response['question']}\n")
             f.write(f"Answer: {response['answer']}\n\n")
     st.write(f"Responses saved to {file_path}")
+
+
+def generate_summary():
+    #read interview response .txt file
+    with open('interview_responses.txt', 'r') as file:
+        responses = file.read()
+
+    prompt = f""" the following are inteview responses from a candidate, please generate an summary if the candidate is suitable for the job or not.
+    and provide feedback on the responses. be very specific and provide feedback on each question. also you can be critical and provide feedback on the responses.{responses}
+    """
+    completion = openai.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a critical evaluator."},
+        {"role": "user", "content": prompt},
+    ])
+    try:
+        response_text = completion.choices[0].message.content.strip()
+        return json.loads(response_text)
+    except json.JSONDecodeError as e:
+        st.write("Error parsing the response. Please try again.")
+        st.write(f"Raw response: {response_text}")
+        st.write(f"JSONDecodeError: {e}")
+        return {"questions": []}

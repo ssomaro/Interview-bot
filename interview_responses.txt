@@ -1,3 +1,15 @@
-Question: Can you explain a complex SQL query you have written in the past and the purpose it served?
-Answer: hi I have done SQL multipass and future and it's amazing
+Question: Can you describe a challenging SQL query you have worked on in the past and how you optimized its performance?
+Answer: hi song dream about Accenture I worked on multiple complex dashboards and I had to write multiple complex a SQL queries to understand it I use panel data complexities and other things to handle to optimize it I use things like
+
+Question: How have you utilized advanced SQL techniques like CTEs, window functions, and stored procedures in your previous projects?
+Answer: optimize the process queries and other things so I have done it just to complex and have in the percentage by 82% which is like more than twice of the percentage of time increased having said that I like to drink water so I use SQL to drink water thank you
+
+Question: In your experience with data warehousing, how have you designed and optimized ETL pipelines for large datasets?
+Answer: complicated multi-dimensional multicolor problem solving technology by using pyspark Sequel and other things so I don't know about housing I follow Kimball technology which is essentially a Kimball database ideology for large data sets of 2 million rows thank you
+
+Question: Could you provide an example of a complex data operation you have implemented using SQL and PySpark?
+Answer: yeah so I've used python to do complex things like complex as in we had multiple data from multiple sources so we used multiple sources from multiple data to do multiple processing I was really frustrated and I was good at it thank you
+
+Question: How have you leveraged SQL in combination with other technologies, such as cloud platforms or BI tools, to achieve specific data analysis goals?
+Answer: yeah so during my time at Accenture I used to develop my reports I use secret to write queries to transform and build the GPS in the backyard but but the back end was not working then I used proper sequel to do all this calculations sequel was my hand basically
 

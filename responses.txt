@@ -1,0 +1,30 @@
+Question 1: What is your name?
+Response: my name is Saturday tomorrow to
+
+Question 2: How old are you?
+Response: I am 25 years old
+
+Question 3: What is your favorite hobby?
+Response: drinking water
+
+Question 4: What is your dream job?
+Response: fishing
+
+Question 5: Where would you like to travel to?
+Response: India
+
+Question 1: What is your name?
+Response: my name is Saturday somewhere to
+
+Question 2: What is your age?
+Response: my age is 25
+
+Question 3: What is your favorite color?
+Response: 
+
+Question 4: What is your favorite food?
+Response: chocolate chocolate
+
+Question 5: What is your dream job?
+Response: cat
+

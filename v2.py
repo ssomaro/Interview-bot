@@ -22,30 +22,31 @@ st.title("Interview Bot - SAIB")
 recognizer = sr.Recognizer()
 
 # Section 1: Resume and Job Description Input
-st.write("### Step 1: Provide Resume and Job Description")
-resume_file = st.file_uploader("Upload your resume (PDF format)", type="pdf")
-job_description = st.text_area("Paste the Job Description here")
+if st.session_state.get('is_data_uploaded', 0) == 0:
+    st.write("### Step 1: Provide Resume and Job Description")
+    resume_file = st.file_uploader("Upload your resume (PDF format)", type="pdf")
+    job_description = st.text_area("Paste the Job Description here")
 
-if st.button("Submit"):
-    if resume_file and job_description:
-        st.write("Loading...")
-        resume_content = extract_text_from_pdf(resume_file)
-        st.session_state['resume'] = resume_content
-        st.session_state['job_description'] = job_description
-        questions = generate_interview_questions(resume_content, job_description)
-        st.session_state['questions'] = questions
-        st.session_state['current_question_index'] = 0
-        st.session_state['responses'] = []
-        st.session_state['is_data_uploaded'] = True
-        st.write("Resume and Job Description successfully uploaded.")
-        st.write("Questions generated:")
-        st.write(questions)
-    else:
-        st.write("Please provide both Resume and Job Description.")
+    if st.button("Submit"):
+        if resume_file and job_description:
+            st.write("Loading...")
+            resume_content = extract_text_from_pdf(resume_file)
+            st.session_state['resume'] = resume_content
+            st.session_state['job_description'] = job_description
+            questions = generate_interview_questions(resume_content, job_description)
+            st.session_state['questions'] = questions
+            st.session_state['current_question_index'] = 0
+            st.session_state['responses'] = []
+            st.session_state['is_data_uploaded'] = 2
+            st.write("Resume and Job Description successfully uploaded.")
+            st.write("Questions generated:")
+            st.write(questions)
+        else:
+            st.write("Please provide both Resume and Job Description.")
 
 # Section 2: Voice Chatbot
 # Section 2: Voice Chatbot
-if st.session_state.get('is_data_uploaded', False):
+if st.session_state.get('is_data_uploaded', False) == 2:
     st.write("### Lets begin your interview. Click on the 'Begin' button to start.")
     
     # Get current question index and responses
