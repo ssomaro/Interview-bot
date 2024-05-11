@@ -55,20 +55,40 @@ def get_text_from_voice():
 
     return ""
 
+# def text_to_speech(text):
+#     """Convert text to speech using OpenAI and play"""
+#     client = OpenAI()
+
+#     # Generate speech with OpenAI API
+#     response = client.audio.speech.create(
+#         model="tts-1",
+#         voice="nova",
+#         input=text
+#     )
+#     # Get the audio data from the response content
+#     audio_bytes = io.BytesIO(response.content)
+#     audio = AudioSegment.from_file(audio_bytes)
+#     play(audio)
+
 def text_to_speech(text):
     """Convert text to speech using OpenAI and play"""
     client = OpenAI()
+    speech_file_path = "speech.mp3"
 
     # Generate speech with OpenAI API
     response = client.audio.speech.create(
         model="tts-1",
-        voice="nova",
+        voice="alloy",
         input=text
     )
-    # Get the audio data from the response content
-    audio_bytes = io.BytesIO(response.content)
-    audio = AudioSegment.from_file(audio_bytes)
+
+    # Save to file
+    response.stream_to_file(speech_file_path)
+    # Play the audio file
+    audio = AudioSegment.from_mp3(speech_file_path)
     play(audio)
+    #delete the file
+    os.remove(speech_file_path)
 
 
 def get_chatbot_response(prompt):
