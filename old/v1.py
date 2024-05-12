@@ -10,7 +10,7 @@ from tempfile import NamedTemporaryFile
 import pdfplumber
 from openai import OpenAI
 
-from utils import *
+from old.utils import *
 client = OpenAI()
 
 # Load environment variables

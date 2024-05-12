@@ -9,7 +9,7 @@ import base64
 from pydub.playback import play
 from pydub import AudioSegment
 from st_audiorec import st_audiorec
-from utils2 import *
+from utils import *
 
 from dotenv import load_dotenv
 load_dotenv()

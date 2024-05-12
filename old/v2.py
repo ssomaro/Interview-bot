@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 from tempfile import NamedTemporaryFile
 from openai import OpenAI
-from utils import *
+from old.utils import *
 import json
 # Load environment variables
 load_dotenv()

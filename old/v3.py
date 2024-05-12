@@ -5,7 +5,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from tempfile import NamedTemporaryFile
-from utils import extract_text_from_pdf, generate_interview_questions, get_text_from_voice, text_to_speech, save_responses_to_file
+from old.utils import extract_text_from_pdf, generate_interview_questions, get_text_from_voice, text_to_speech, save_responses_to_file
 
 # Load environment variables
 load_dotenv()

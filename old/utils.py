@@ -1,39 +1,41 @@
 import streamlit as st
-import openai
-import sounddevice as sd
-import wavio
-import numpy as np
-from openai import OpenAI
-import os
-import base64
-from pydub.playback import play
+import speech_recognition as sr
+from gtts import gTTS
 from pydub import AudioSegment
-from st_audiorec import st_audiorec
-import pdfplumber
-import json
-
+from pydub.playback import play
+import openai
+import os
 from dotenv import load_dotenv
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+from tempfile import NamedTemporaryFile
+import pdfplumber
+from openai import OpenAI
+import json
 client = OpenAI()
 
+# Load environment variables
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+openai.api_key = OPENAI_API_KEY
+recognizer = sr.Recognizer()
 
-def autoplay_audio(data):
-    b64 = base64.b64encode(data).decode()
-    md = f"""
-        <audio autoplay="true">
-        <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
-        Your browser does not support the audio element.
-        </audio>
-        """
-    st.markdown(
-        md,
-        unsafe_allow_html=True,
-    )
+def get_text_from_voice():
+    """Capture voice and convert to text"""
+    with sr.Microphone() as source:
+        st.write("Please speak into the microphone. give a pause of 3 seconds after speaking.")
+        audio = recognizer.listen(source, timeout=20)
+        try:
+            text = recognizer.recognize_google(audio)
+            st.write(f"Response: {text}")
+            return text
+        except sr.UnknownValueError:
+            st.write("Sorry, could not recognize your speech.")
+        except sr.RequestError as e:
+            st.write(f"Could not request results from Google Speech Recognition service; {e}")
+
+    return ""
 
 def text_to_speech(text):
     """Convert text to speech using OpenAI and play"""
-    
     client = OpenAI()
     speech_file_path = "speech.mp3"
 
@@ -43,36 +45,15 @@ def text_to_speech(text):
         voice="alloy",
         input=text
     )
+
+    # Save to file
     response.stream_to_file(speech_file_path)
-    
+    # Play the audio file
     audio = AudioSegment.from_mp3(speech_file_path)
     play(audio)
-    
-def record_audio(state, fs=44100):
-    """Continuously record audio from the microphone."""
-    def _recording_loop():
-        while state.recording:
-            state.audio.append(sd.rec(int(fs), samplerate=fs, channels=2, dtype='int16'))
-            sd.wait()
+    #delete the file
+    os.remove(speech_file_path)
 
-    state.audio = []
-    state.recording = True
-    thread = Thread(target=_recording_loop)
-    thread.start()
-
-
-def speech_to_text(file_path):
-    """Convert speech to text using OpenAI"""
-    client = OpenAI()
-    audio_file = open(file_path, "rb")
-
-    # Generate speech with OpenAI API
-    transcription = client.audio.transcriptions.create(
-        model="whisper-1",
-        file=audio_file
-    )
-
-    return transcription.text
 
 def get_chatbot_response(prompt):
     """Generate response using GPT-4"""
@@ -91,7 +72,6 @@ def extract_text_from_pdf(pdf_file):
     with pdfplumber.open(pdf_file) as pdf:
         for page in pdf.pages:
             text += page.extract_text()
-    print(text)
     return text
 
 
@@ -160,4 +140,5 @@ def generate_summary():
     st.write(f"Raw response: {response_text}")
     return (response_text)
    
+        
        
