@@ -11,7 +11,7 @@ from pydub import AudioSegment
 from st_audiorec import st_audiorec
 import pdfplumber
 import json
-
+# import dotenv
 # from dotenv import load_dotenv
 # load_dotenv()
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -47,7 +47,8 @@ def text_to_speech(text):
     response.stream_to_file(speech_file_path)
     
     audio = AudioSegment.from_mp3(speech_file_path)
-    play(audio)
+    autoplay_audio(audio)
+    # play(audio)
     
 def record_audio(state, fs=44100):
     """Continuously record audio from the microphone."""
