@@ -8,3 +8,5 @@ pdfplumber
 pyaudio
 audio_recorder_streamlit
 streamlit-audiorec
+sounddevice
+wavio
