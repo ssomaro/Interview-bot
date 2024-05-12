@@ -6,7 +6,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 import openai
 import os
-from dotenv import load_dotenv
+
 import pdfplumber
 from openai import OpenAI
 import json
@@ -15,9 +15,12 @@ from st_audiorec import st_audiorec
 from pydub import AudioSegment
 from pydub.playback import play
 # Load environment variables
-load_dotenv()
-from audio_recorder_streamlit import audio_recorder
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# from dotenv import load_dotenv
+# load_dotenv()
+# from audio_recorder_streamlit import audio_recorder
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+openai.api_key = st.secrets.OPENAI_API_KEY
 openai.api_key = OPENAI_API_KEY
 client = OpenAI()
 
