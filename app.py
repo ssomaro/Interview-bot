@@ -21,7 +21,7 @@ from pydub.playback import play
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 openai.api_key = st.secrets.OPENAI_API_KEY
-openai.api_key = OPENAI_API_KEY
+# openai.api_key = OPENAI_API_KEY
 client = OpenAI()
 
 def handle_show_q():

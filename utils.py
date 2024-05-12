@@ -12,11 +12,12 @@ from st_audiorec import st_audiorec
 import pdfplumber
 import json
 
-from dotenv import load_dotenv
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = OpenAI()
-
+# from dotenv import load_dotenv
+# load_dotenv()
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# client = OpenAI()
+# openai.api_key = OPENAI_API_KEY
+openai.api_key = st.secrets.OPENAI_API_KEY
 
 def autoplay_audio(data):
     b64 = base64.b64encode(data).decode()
