@@ -19,8 +19,11 @@ import json
 # openai.api_key = OPENAI_API_KEY
 openai.api_key = st.secrets.OPENAI_API_KEY
 
-def autoplay_audio(data):
-    b64 = base64.b64encode(data).decode()
+def autoplay_audio(file_path):
+    with open(file_path, "rb") as audio_file:
+        audio_data = audio_file.read()
+    
+    b64 = base64.b64encode(audio_data).decode()
     md = f"""
         <audio autoplay="true">
         <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
@@ -44,11 +47,14 @@ def text_to_speech(text):
         voice="alloy",
         input=text
     )
+    
     response.stream_to_file(speech_file_path)
     
-    audio = AudioSegment.from_mp3(speech_file_path)
-    autoplay_audio(audio)
-    # play(audio)
+    # Play the audio using the updated autoplay_audio function
+    autoplay_audio(speech_file_path)
+    
+    # Optionally, remove the file if no longer needed
+    os.remove(speech_file_path)
     
 def record_audio(state, fs=44100):
     """Continuously record audio from the microphone."""

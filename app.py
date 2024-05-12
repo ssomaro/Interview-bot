@@ -20,9 +20,10 @@ from pydub.playback import play
 # load_dotenv()
 # from audio_recorder_streamlit import audio_recorder
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# openai.api_key = OPENAI_API_KEY
 
 openai.api_key = st.secrets.OPENAI_API_KEY
-# openai.api_key = OPENAI_API_KEY
+
 client = OpenAI()
 
 def handle_show_q():
