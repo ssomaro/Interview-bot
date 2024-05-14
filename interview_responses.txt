@@ -1,3 +1,9 @@
-Question: Can you provide an example where you optimized database performance using SQL and PySpark in a large-scale data processing project?
+Question: Can you discuss a specific project where you utilized your expertise in data warehousing and SQL to optimize query performance and support complex data operations?
+Answer: Yeah, sure.
+
+Question: How have you successfully managed cloud deployment and automation in your previous roles, specifically in migrating applications and creating pipeline jobs?
+Answer: No response
+
+Question: Can you provide an example of a data visualization project where you effectively communicated insights from large datasets to business stakeholders?
 Answer: No response
 

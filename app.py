@@ -28,12 +28,28 @@ client = OpenAI()
 
 def handle_show_q():
     st.session_state['show_audio'] = True
-    st.session_state['show_submit_b'] = False  # Enable the submit button after showing the question
+    st.session_state['show_submit_b'] = True  # Enable the submit button after showing the question
 
 def handle_submit():
-    st.session_state['current_question_index'] += 1
-    st.session_state['show_submit_b'] = True  # Disable the submit button until the next question is listened to
-    st.session_state['show_audio'] = False
+    if not st.session_state.get('show_submit_b', True):  # Check if button is not disabled
+        with st.spinner("Processing..."):
+            st.session_state['show_submit_b'] = False  # Disable the submit button while processing
+            st.session_state['current_question_index'] += 1
+            st.session_state['show_audio'] = False
+            st.balloons()
+            st.session_state['show_audio'] = False
+            file_path = "output.wav"
+            if st.session_state.wav_audio_data is not None:
+                with open(file_path, "wb") as f:
+                    f.write(st.session_state.wav_audio_data)
+                response_text = speech_to_text(file_path)
+            else:
+                response_text = "No response"
+            st.success("Response saved successfully!")
+            st.session_state['response1'] = response_text
+            responses.append({"question": current_question, "answer": response_text})
+            st.session_state['responses'] = responses
+            st.session_state['show_submit_b'] = True  # Re-enable the submit button after processing
 
 def reset_submit():
     st.session_state['show_submit_b'] = True 
@@ -92,36 +108,23 @@ if 'is_data_uploaded' in st.session_state and st.session_state['is_data_uploaded
 
     if st.session_state.get('current_question_index', 0) < len(questions):
         current_question = questions[question_index]
-        if st.button(f"### 📝 Listen to Question {question_index + 1}", on_click=handle_show_q):
+        st.session_state['current_question'] = current_question
+        if st.button(f"### 📝 Attempt Question {question_index + 1} of {len(questions)}", on_click=handle_show_q):
             question_text = current_question
             file_path = text_to_speech(question_text)
-            st.session_state['show_submit_b'] = False  # Allow to show the button after question is listened to
+            st.session_state['show_submit_b'] = True  # Allow to show the button after question is listened to
 
         if 'show_audio' in st.session_state and st.session_state['show_audio']:
             st.markdown(f"<h3 style='font-weight: bold;'>{current_question}</h3>", unsafe_allow_html=True)
             st.session_state.wav_audio_data = st_audiorec()
-            # if st.session_state.wav_audio_data is not None:
-            #     st.audio(st.session_state.wav_audio_data, format='audio/wav')
+            st.session_state['show_submit_b'] = False  # Disable the submit button until the response is recorded
 
-        if st.button("Save Response and Move to next Question", on_click=handle_submit, disabled=st.session_state.get('show_submit_b', True)):
-            st.balloons()
-            st.session_state['show_audio'] = False
-            file_path = "output.wav"
-            if st.session_state.wav_audio_data is not None:
-                with open(file_path, "wb") as f:
-                    f.write(st.session_state.wav_audio_data)
-                response_text = speech_to_text(file_path)
-            else:
-                response_text = "No response"
-            st.success("Response saved successfully!")
-            responses.append({"question": current_question, "answer": response_text})
-            st.session_state['responses'] = responses
+        if st.button("Save response and Move to next Question", on_click=handle_submit, disabled=st.session_state.get('show_submit_b', True)):
             reset_submit()
 
     else:
         st.markdown("### 🎉 You have answered all the questions. Thank you!")
         st.balloons()
-        #write response to a text file
         save_responses_to_file(st.session_state['responses'])
         summary_text = generate_summary()
-        st.download_button('Download Summary', summary_text, file_name='interview_summary.txt')
+        st.download_button('Download Your Feedback', summary_text, file_name='interview_summary.txt')

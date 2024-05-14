@@ -30,31 +30,30 @@ def autoplay_audio(file_path):
         Your browser does not support the audio element.
         </audio>
         """
-    st.markdown(
-        md,
-        unsafe_allow_html=True,
-    )
+    st.markdown(md, unsafe_allow_html=True)
 
 def text_to_speech(text):
     """Convert text to speech using OpenAI and play"""
+    try:
+        client = OpenAI()
+        speech_file_path = "speech.mp3"
     
-    client = OpenAI()
-    speech_file_path = "speech.mp3"
-
-    # Generate speech with OpenAI API
-    response = client.audio.speech.create(
-        model="tts-1",
-        voice="alloy",
-        input=text
-    )
+        # Generate speech with OpenAI API
+        response = client.audio.speech.create(
+            model="tts-1",
+            voice="alloy",
+            input=text
+        )
     
-    response.stream_to_file(speech_file_path)
+        response.stream_to_file(speech_file_path)
     
-    # Play the audio using the updated autoplay_audio function
-    autoplay_audio(speech_file_path)
+        # Play the audio using the updated autoplay_audio function
+        autoplay_audio(speech_file_path)
     
-    # Optionally, remove the file if no longer needed
-    os.remove(speech_file_path)
+    finally:
+        # Clean up the file after playback
+        if os.path.exists(speech_file_path):
+            os.remove(speech_file_path)
     
 def record_audio(state, fs=44100):
     """Continuously record audio from the microphone."""
@@ -104,23 +103,21 @@ def extract_text_from_pdf(pdf_file):
 
 
 def generate_interview_questions(resume_text, job_desc):
-    """Generate five interview questions using GPT-3.5."""
+    """Generate three interview questions using GPT-3.5."""
     prompt = f"""
     I am sharing a resume and a job description with you.
-    Your task is to generate five interview questions that would be suitable to ask the candidate.
+    Your task is to generate only three interview questions that would be suitable to ask the candidate.
 
     Resume: {resume_text}
     Job Description: {job_desc}
 
-    Respond in JSON format only, with an array of five questions like this do not include annything else even the word json,just the dictionary, i should be able to convert it to json :
+    Respond in JSON format only, with an array of three questions like this do not include annything else even the word json,just the dictionary, i should be able to convert it to json :
 
     {{
         "questions": [
             "Question 1",
             "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
+            "Question 3"            
         ]
     }}
     """
@@ -135,7 +132,7 @@ def generate_interview_questions(resume_text, job_desc):
         return json.loads(response_text)
     except json.JSONDecodeError as e:
         st.write("Error parsing the response. Please try again.")
-        st.write(f"Raw response: {response_text}")
+        # st.write(f"Raw response: {response_text}")
         st.write(f"JSONDecodeError: {e}")
         return {"questions": []}
     # return json.loads(completion.choices[0].message.content.strip())
@@ -147,7 +144,7 @@ def save_responses_to_file(responses):
         for response in responses:
             f.write(f"Question: {response['question']}\n")
             f.write(f"Answer: {response['answer']}\n\n")
-    st.write(f"Responses saved to {file_path}")
+    st.write(f"Your responses have been saved successfully!")
 
 
 def generate_summary():
@@ -165,7 +162,8 @@ def generate_summary():
         {"role": "user", "content": prompt},
     ])
     response_text = completion.choices[0].message.content.strip()
-    st.write(f"Raw response: {response_text}")
+    text_to_speech("Thank you ! for taking time to attend the interview, we will get back to you soon. Have a great day!")
+    # st.write(f"Raw response: {response_text}")
     return (response_text)
    
        
