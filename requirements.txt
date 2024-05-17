@@ -10,3 +10,4 @@ audio_recorder_streamlit
 streamlit-audiorec
 sounddevice
 wavio
+langchain
