@@ -17,10 +17,12 @@ MODEL_NAME = st.secrets.MODEL_NAME
 
 from prompts.interview_prompts import generate_questions_prompt, generate_feedback_prompt
 from langchain.llms import OpenAI
+#other modles can be imported from langchain.llms
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 llm = OpenAI(model_name= MODEL_NAME, temperature=0.9)
+#this can be changed to any other model name
 
 
 
