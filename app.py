@@ -24,7 +24,6 @@ from pydub.playback import play
 
 openai.api_key = st.secrets.OPENAI_API_KEY
 
-client = OpenAI()
 
 def handle_show_q():
     st.session_state['show_audio'] = True
